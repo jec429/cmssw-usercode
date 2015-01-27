@@ -1,0 +1,144 @@
+DEBUG 2015-01-22 10:34:10,270: 	 Executing command: 'submit'
+DEBUG 2015-01-22 10:34:10,271: 	 Found /uscms/home/jchaves/.crab3 file
+DEBUG 2015-01-22 10:34:10,281: 	 Checking credentials
+DEBUG 2015-01-22 10:34:10,281: 	 Found proxy file /tmp/x509up_u45011
+DEBUG 2015-01-22 10:34:10,281: 	 Getting proxy life time left
+DEBUG 2015-01-22 10:34:10,383: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -timeleft
+ output : 526856
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-22 10:34:10,486: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -actimeleft
+ output : 526856
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-22 10:34:10,486: 	 Proxy valid for 146:20:56 hours
+INFO 2015-01-22 10:34:10,486: 	 Will use configuration file crabConfig.py
+DEBUG 2015-01-22 10:34:10,487: 	 Loading configuration
+ERROR 2015-01-22 10:34:10,496: 	 Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_genhistos' already exists 
+Please change the requestName in the config file
+ERROR 2015-01-22 10:34:10,496: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 181, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 166, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/submit.py", line 39, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args = True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/SubCommand.py", line 222, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/client_utilities.py", line 336, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_genhistos' already exists 
+Please change the requestName in the config file
+DEBUG 2015-01-23 09:02:14,618: 	 Executing command: 'submit'
+DEBUG 2015-01-23 09:02:14,618: 	 Found /uscms/home/jchaves/.crab3 file
+DEBUG 2015-01-23 09:02:14,627: 	 Checking credentials
+DEBUG 2015-01-23 09:02:14,627: 	 Found proxy file /tmp/x509up_u45011
+DEBUG 2015-01-23 09:02:14,627: 	 Getting proxy life time left
+DEBUG 2015-01-23 09:02:14,729: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -timeleft
+ output : 445972
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-23 09:02:14,832: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -actimeleft
+ output : 445972
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-23 09:02:14,832: 	 Proxy valid for 123:52:52 hours
+INFO 2015-01-23 09:02:14,833: 	 Will use configuration file crabConfig.py
+DEBUG 2015-01-23 09:02:14,833: 	 Loading configuration
+ERROR 2015-01-23 09:02:14,841: 	 Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_genhistos' already exists 
+Please change the requestName in the config file
+ERROR 2015-01-23 09:02:14,841: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 181, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 166, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/submit.py", line 39, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args = True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/SubCommand.py", line 222, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/client_utilities.py", line 336, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_genhistos' already exists 
+Please change the requestName in the config file
+DEBUG 2015-01-23 09:09:04,646: 	 Executing command: 'submit'
+DEBUG 2015-01-23 09:09:04,647: 	 Found /uscms/home/jchaves/.crab3 file
+DEBUG 2015-01-23 09:09:04,658: 	 Checking credentials
+DEBUG 2015-01-23 09:09:04,658: 	 Found proxy file /tmp/x509up_u45011
+DEBUG 2015-01-23 09:09:04,658: 	 Getting proxy life time left
+DEBUG 2015-01-23 09:09:04,761: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -timeleft
+ output : 445562
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-23 09:09:04,863: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -actimeleft
+ output : 445562
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-23 09:09:04,863: 	 Proxy valid for 123:46:02 hours
+INFO 2015-01-23 09:09:04,864: 	 Will use configuration file crabConfig.py
+DEBUG 2015-01-23 09:09:04,864: 	 Loading configuration
+ERROR 2015-01-23 09:09:04,867: 	 Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_genhistos' already exists 
+Please change the requestName in the config file
+ERROR 2015-01-23 09:09:04,867: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 181, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 166, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/submit.py", line 39, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args = True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/SubCommand.py", line 222, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/client_utilities.py", line 336, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_genhistos' already exists 
+Please change the requestName in the config file
+DEBUG 2015-01-23 10:28:08,089: 	 Executing command: 'submit'
+DEBUG 2015-01-23 10:28:08,090: 	 Found /uscms/home/jchaves/.crab3 file
+DEBUG 2015-01-23 10:28:08,101: 	 Checking credentials
+DEBUG 2015-01-23 10:28:08,101: 	 Found proxy file /tmp/x509up_u45011
+DEBUG 2015-01-23 10:28:08,101: 	 Getting proxy life time left
+DEBUG 2015-01-23 10:28:08,204: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -timeleft
+ output : 440818
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-23 10:28:08,306: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u45011 -actimeleft
+ output : 440818
+
+ error: 
+ retcode : 0
+DEBUG 2015-01-23 10:28:08,306: 	 Proxy valid for 122:26:58 hours
+INFO 2015-01-23 10:28:08,307: 	 Will use configuration file crabConfig.py
+DEBUG 2015-01-23 10:28:08,307: 	 Loading configuration
+ERROR 2015-01-23 10:28:08,316: 	 Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_all' already exists 
+Please change the requestName in the config file
+ERROR 2015-01-23 10:28:08,316: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 181, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/bin/crab", line 166, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/submit.py", line 39, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args = True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/Commands/SubCommand.py", line 222, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc481/cms/crabclient/3.3.12.patch1/lib/python2.6/site-packages/CRABClient/client_utilities.py", line 336, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/uscms/home/jchaves/CMSSW_7_2_2_patch2/src/JChaves/WR_Analyzer/test/crab/crab_WR_TTbar_all' already exists 
+Please change the requestName in the config file
