@@ -1,0 +1,9 @@
+# ROOT files #
+##############
+
+*.root
+
+# Psets #
+#########
+
+WR_Analyzer/test/psets
