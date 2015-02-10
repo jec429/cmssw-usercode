@@ -200,12 +200,12 @@ void GenHistos::analyze(const edm::Event& event, const edm::EventSetup& setup) {
     Mee = (eles[0].p4()+eles[1].p4()).M();
     Meejj = (jets[0].p4()+jets[1].p4()+eles[0].p4()+eles[1].p4()).M();
   }
-  std::cout<<"EVENT2"<<std::endl;
+  //std::cout<<"EVENT2"<<std::endl;
   if(Mee > dilepton_mass_cut && Meejj > lljj_mass_cut){
     e1_pt->Fill(eles[0].pt());
     e1_eta->Fill(eles[0].eta());
     e1_phi->Fill(eles[0].phi());
-    std::cout<<"EVENT1"<<std::endl;
+    //std::cout<<"EVENT1"<<std::endl;
     e1_dz->Fill(fabs(eles[0].vz() - gen_particles->at(2).vz()));
     e2_pt->Fill(eles[1].pt());
     e2_eta->Fill(eles[1].eta());
@@ -214,7 +214,7 @@ void GenHistos::analyze(const edm::Event& event, const edm::EventSetup& setup) {
 
     deta_leptons->Fill(eles[0].eta()-eles[1].eta());
     dphi_leptons->Fill(deltaPhi(eles[0].phi(),eles[1].phi()));
-    std::cout<<"EVENT3"<<std::endl;
+    //std::cout<<"EVENT3"<<std::endl;
     M_N1->Fill((jets[0].p4()+jets[1].p4()+eles[0].p4()).M());
     M_N2->Fill((jets[0].p4()+jets[1].p4()+eles[1].p4()).M());    
     M_ee->Fill(Mee);

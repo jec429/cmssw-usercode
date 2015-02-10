@@ -14,7 +14,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
 
 process.source = cms.Source("PoolSource",
-                            fileNames=cms.untracked.vstring('file:myFile.root'),
+                            fileNames=cms.untracked.vstring('file:/uscms/home/jchaves/private/CMSSW_7_2_2_patch2/src/MakeSamples/step0.root'),
                             )
 # This only works interactively
 # This only works interactively
@@ -28,9 +28,9 @@ for s in Samples.signal_samples:
     if mass in s.name:
         dset = s.dataset
                         
-process.source.fileNames = file_list(dset+'step4_*.root',True)
-#process.source.fileNames = file_list('/WRToNuEToEEJJ_MW-1000_MNu-500_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',False)
-outfile = 'genhistos.root'
+#process.source.fileNames = file_list(dset+'step1_*.root',True)
+#process.source.fileNames = file_list('/WRToNuEToEEJJ_MW-2000_MNu-1000_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',False)
+outfile = 'genhistos0.root'
 
 if ttbar:
     process.source.fileNames = file_list(Samples.ttbar_samples[0].dataset,False)
@@ -46,8 +46,8 @@ process.TFileService = cms.Service('TFileService', fileName = cms.string(outfile
 
 
 process.ana = cms.EDAnalyzer('GenHistos',
-                            gen_src = cms.InputTag('prunedGenParticles'),
-                            gen_jet_src = cms.InputTag('slimmedGenJets'),
+                            gen_src = cms.InputTag('genParticles'),
+                            gen_jet_src = cms.InputTag('ak4GenJets'),
                             jet_pt_min = cms.double(40),
                             jet_eta_max = cms.double(2.5),
                             dilepton_mass_cut = cms.double(0.0),
@@ -55,7 +55,7 @@ process.ana = cms.EDAnalyzer('GenHistos',
                             )
 process.ana2 = process.ana.clone(dilepton_mass_cut = cms.double(200.0))
 process.ana3 = process.ana.clone(dilepton_mass_cut = cms.double(200.0),
-                                 lljj_mass_cut = cms.double(0.0))
+                                 lljj_mass_cut = cms.double(600.0))
 
 process.p = cms.Path(process.ana)
 process.p2 = cms.Path(process.ana2)

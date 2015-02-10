@@ -105,6 +105,13 @@ private:
   TH1F* ele_pre4;
   TH1F* ele_pre5;
   TH1F* ele_pre6;
+  TH1F* mu_pre0;
+  TH1F* mu_pre1;
+  TH1F* mu_pre2;
+  TH1F* mu_pre3;
+  TH1F* mu_pre4;
+  TH1F* mu_pre5;
+  TH1F* mu_pre6;
 
 };
 
@@ -133,6 +140,13 @@ WR_Analyzer::WR_Analyzer(const edm::ParameterSet& cfg)
   ele_pre4 = fs->make<TH1F>("ele_pre4", "", 2, 0, 2);
   ele_pre5 = fs->make<TH1F>("ele_pre5", "", 2, 0, 2);
   ele_pre6 = fs->make<TH1F>("ele_pre6", "", 2, 0, 2);
+  mu_pre0 = fs->make<TH1F>("mu_pre0", "", 2, 0, 2);
+  mu_pre1 = fs->make<TH1F>("mu_pre1", "", 2, 0, 2);
+  mu_pre2 = fs->make<TH1F>("mu_pre2", "", 2, 0, 2);
+  mu_pre3 = fs->make<TH1F>("mu_pre3", "", 2, 0, 2);
+  mu_pre4 = fs->make<TH1F>("mu_pre4", "", 2, 0, 2);
+  mu_pre5 = fs->make<TH1F>("mu_pre5", "", 2, 0, 2);
+  mu_pre6 = fs->make<TH1F>("mu_pre6", "", 2, 0, 2);
   ParticleID = fs->make<TH1F>("ParticleID", "", 40, -9910000, 9910000);
   electronID = fs->make<TH1F>("electronID", "", 10, 0, 10);
   electronID2 = fs->make<TH1F>("electronID2", "", 10, 0, 10);
@@ -245,33 +259,6 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
     // the ValueMap object and store it. We need a Ptr object as the key.
     const Ptr<pat::Electron> elPtr(electrons, el - electrons->begin() );   
 
-    /*if(el->pt() > 20 && el->pt() < 50){
-      ele_pre1->Fill(1);
-      if(fabs(el->superCluster()->eta()) < 1.4442){
-	ele_pre2->Fill(1);
-	if(el->passConversionVeto()){
-	  ele_pre3->Fill(1);
-	  if(fabs(vertices->at(0).z() - el->vz()) < 1){
-	    ele_pre4->Fill(1);
-	    bool MC_match = false;
-	    float dR = 0.1;
-	    for(const reco::GenParticle& gen : *gen_particles){
-	      if(fabs(gen.pdgId()) == 11 && deltaR(gen.eta(),gen.phi(),el->eta(),el->phi()) < dR && gen.status() == 1 && fabs(gen.mother()->pdgId()) != 15 && fabs(gen.mother()->pdgId()) < 50) {
-		//std::cout<<"MOM="<<gen.mother()->pdgId()<<std::endl;
-		MC_match = true;
-		dR = deltaR(gen.eta(),gen.phi(),el->eta(),el->phi());
-	      }		
-	    }  
-	    if(MC_match){
-	      ele_pre5->Fill(1);
-	      const Ptr<pat::Electron> elPtr(electrons, el - electrons->begin() );
-	      if((*veto_id_decisions)[ elPtr ])
-		ele_pre6->Fill(1);
-	    }
-	  }
-	}
-      }
-      }*/
     ele_pre0->Fill(1);
     if(el->pt() > 40){
       ele_pre1->Fill(1);
@@ -314,11 +301,31 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
       electronID2->Fill(isPassVeto);
     }
   }
-  //if(pre_eles.size() > 0)
-  //electronID2->Fill(float(eles.size())/float(pre_eles.size()));
 
   for(const pat::Muon& mu : *muons){
-    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && mu.isTightMuon(primary_vertex->at(0)))
+    mu_pre0->Fill(1);
+    if(mu.pt() > 40){
+      mu_pre1->Fill(1);
+      if(fabs(mu.eta()) < 2.4){
+	mu_pre2->Fill(1);
+	bool MC_match = false;
+	float dR = 0.1;
+	for(const reco::GenParticle& gen : *gen_particles){
+	  if(fabs(gen.pdgId()) == 13 && deltaR(gen.eta(),gen.phi(),mu.eta(),mu.phi()) < dR && gen.status() == 1 && fabs(gen.mother()->pdgId()) != 15) {
+	    MC_match = true;
+	    dR = deltaR(gen.eta(),gen.phi(),mu.eta(),mu.phi());
+	  }
+	}
+	if(MC_match){
+	  mu_pre3->Fill(1);
+	if(mu.isHighPtMuon(primary_vertex->at(0)))
+	  mu_pre4->Fill(1);	  
+	if(mu.isTightMuon(primary_vertex->at(0)))
+	  mu_pre5->Fill(1);	
+	}
+      }
+    }
+    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && mu.isHighPtMuon(primary_vertex->at(0)))
       mus.push_back(mu);    
   }
 
@@ -359,20 +366,23 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
       M_N1->Fill((pjets[0].p4()+pjets[1].p4()+eles[0].p4()).M());
       M_N2->Fill((pjets[0].p4()+pjets[1].p4()+eles[1].p4()).M());    
       M_ee->Fill(Mee);
-      M_eejj->Fill(Meejj);
-      jet1_pt->Fill(pjets[0].pt());
-      jet1_eta->Fill(pjets[0].eta());
-      jet1_phi->Fill(pjets[0].phi());  
-      jet2_pt->Fill(pjets[1].pt());
-      jet2_eta->Fill(pjets[1].eta());
-      jet2_phi->Fill(pjets[1].phi());  
-      deta_jets->Fill(pjets[0].eta()-pjets[1].eta());
-      dphi_jets->Fill(deltaPhi(pjets[0].phi(),pjets[1].phi()));
-      M_jj->Fill((pjets[0].p4()+pjets[1].p4()).M());
-    }
-    mMET->Fill(met.pt());
-    N_pv->Fill(1);
-    N_jets->Fill(jets->size());
+      M_eejj->Fill(Meejj);      
+    }    
+  }
+
+  mMET->Fill(met.pt());
+  N_pv->Fill(1);
+  N_jets->Fill(jets->size());
+  if(pjets.size() > 1){
+    jet1_pt->Fill(pjets[0].pt());
+    jet1_eta->Fill(pjets[0].eta());
+    jet1_phi->Fill(pjets[0].phi());  
+    jet2_pt->Fill(pjets[1].pt());
+    jet2_eta->Fill(pjets[1].eta());
+    jet2_phi->Fill(pjets[1].phi());  
+    deta_jets->Fill(pjets[0].eta()-pjets[1].eta());
+    dphi_jets->Fill(deltaPhi(pjets[0].phi(),pjets[1].phi()));
+    M_jj->Fill((pjets[0].p4()+pjets[1].p4()).M());
   }
 
   double Mmumu = 0.0;
@@ -390,7 +400,9 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
     mu2_eta->Fill(mus[1].p4().eta());
     mu2_phi->Fill(mus[1].p4().phi());
     M_mumu->Fill(Mmumu);
-    M_mumujj->Fill(Mmumujj);
+    if(pjets.size() > 1){
+      M_mumujj->Fill(Mmumujj);
+    }
   }
 
   if((mus.size() > 0) && (eles.size() > 0) ){

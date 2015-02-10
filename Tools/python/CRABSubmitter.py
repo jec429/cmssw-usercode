@@ -155,22 +155,13 @@ config.Site.storageSite = 'T3_US_FNALLPC'
     elif 'dyjets' in arg[0]:        
         index = 2
         assert len(arg) > 2
-        if '100to200' in arg[2]:
-            datasets[2] = Samples.dyjets_samples[0].dataset
-            if arg[1] == -1:
-                nevents = Samples.ttbar_samples[0].nfiles
-        elif '200to400' in arg[2]:
-            datasets[2] = Samples.dyjets_samples[1].dataset
-            if arg[1] == -1:
-                nevents = Samples.ttbar_samples[0].nfiles
-        elif '400to600' in arg[2]:
-            datasets[2] = Samples.dyjets_samples[2].dataset
-            if arg[1] == -1:
-                nevents = Samples.ttbar_samples[0].nfiles
-        elif '600toInf' in arg[2]:
-            datasets[2] = Samples.dyjets_samples[3].dataset
-            if arg[1] == -1:
-                nevents = Samples.ttbar_samples[0].nfiles
+        k = 0
+        for i,s in enumerate(Samples.dyjets_samples):
+            if arg[2] in s.dataset:
+                k = i
+        datasets[2] = Samples.dyjets_samples[k].dataset
+        if arg[1] == -1:
+                nevents = Samples.dyjets_samples[k].nfiles
     elif 'signal' in arg[0]:
         index = 3
         s = arg[0].split('_')[-1] #TODO: find the signal sample        

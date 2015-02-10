@@ -165,12 +165,12 @@ bool EventSelector::filter(edm::Event& event, const edm::EventSetup&) {
   }  
   
   for(const pat::Muon& mu : *muons){
-    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && (mu.isTightMuon(primary_vertex->at(0))))
+    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && (mu.isHighPtMuon(primary_vertex->at(0))))
       good_muons.push_back(mu);    
   }
 
-  if((good_electrons.size() < 2) && (good_muons.size() < 2))
-    return false;
+  //if((good_electrons.size() < 2) && (good_muons.size() < 2))
+  //return false;
 
   double Mee = 0.0;
   double Meejj = 0.0;
