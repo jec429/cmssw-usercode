@@ -4,13 +4,13 @@ import os,glob,sys
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process('BasicAnalyzer')
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(50000))
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(False))
 process.source = cms.Source('PoolSource', fileNames = cms.untracked.vstring('file:pat.root'))
 process.load('FWCore.MessageLogger.MessageLogger_cfi')
-process.MessageLogger.cerr.FwkReport.reportEvery = 1000000
+process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
-process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_2000_reco/EXO-Phys14DR-00009_*.root',True)
+process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_EE_2000_reco/EXO-Phys14DR-00009_*.root',True)
 outfile = 'simple_trigger_efficiency.root'
 process.TFileService = cms.Service('TFileService', fileName = cms.string(outfile))
 

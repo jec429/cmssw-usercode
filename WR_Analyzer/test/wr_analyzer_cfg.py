@@ -12,7 +12,7 @@ process = cms.Process("ANA")
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
                             fileNames=cms.untracked.vstring('file:EXO-Phys14DR-00009.root'),
@@ -30,9 +30,9 @@ for s in Samples.signal_samples:
         
 #process.source.fileNames = file_list(dset+'step4_PAT*.root',True)
 #process.source.fileNames = file_list('/DYJetsToLL_M-50_13TeV-madgraph-pythia8/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',False)
-#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_EE_2000_reco/EXO-Phys14DR-00009_*.root',True)
-process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_2000_reco/EXO-Phys14DR-00009_*.root',True)
-outfile = 'out_EXO_MUMU.root'
+process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_EE_2000_reco/EXO-Phys14DR-00009_*.root',True)
+#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_2000_reco/EXO-Phys14DR-00009_*.root',True)
+outfile = 'out_EXO.root'
 
 if ttbar:
     process.source.fileNames = file_list(Samples.ttbar_samples[0].dataset,False)
@@ -136,7 +136,7 @@ if __name__ == '__main__' and hasattr(sys, 'argv') and submit:
         #crab2_submit('ttbar',-1,'all')
         crab3_submit('ttbar',-1,'all')
     if dyjets:
-        #for x in ['HT-100To200','HT-200To400','HT-400To600','HT-600ToInf']:
-        for x in ['M-200To400','M-400To800','M-800To1400','M-1400To2300','M-3500To4500','M-4500To6000','M-6000To7500','M-7500To8500',]:
+        for x in ['HT-100To200','HT-200To400','HT-400To600','HT-600ToInf']:
+        #for x in ['M-200To400','M-400To800','M-800To1400','M-1400To2300','M-3500To4500','M-4500To6000','M-6000To7500','M-7500To8500',]:
             #crab2_submit('dyjets',-1,x)
             crab3_submit('dyjets',-1,x)

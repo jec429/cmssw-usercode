@@ -210,7 +210,7 @@ WR_Analyzer::WR_Analyzer(const edm::ParameterSet& cfg)
 void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup) {
   using namespace std;
   using namespace edm;
-  using namespace reco;
+  using namespace reco;  
 
   edm::Handle<pat::ElectronCollection> electrons;
   event.getByLabel(electron_src, electrons);
@@ -252,6 +252,7 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
   for(const reco::GenParticle& gen : *gen_particles){
     ParticleID->Fill(gen.pdgId());
   }
+
   for(std::vector<pat::Electron>::const_iterator el = electrons->begin();
        el != electrons->end(); el++){
 
@@ -261,27 +262,30 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
 
     ele_pre0->Fill(1);
     if(el->pt() > 40){
+      bool isPassVeto = false;
+      bool isPassHEEP = false;
       ele_pre1->Fill(1);
       if(fabs(el->superCluster()->eta()) < 1.442 ||  (fabs(el->superCluster()->eta()) > 1.56 && fabs(el->superCluster()->eta()) < 2.5)){
 	ele_pre2->Fill(1);
 	if(el->passConversionVeto()){
 	  ele_pre3->Fill(1);
 	  e1_dz->Fill(fabs(vertices->at(0).z() - el->vz()));
-	  if(fabs(vertices->at(0).z() - el->vz()) < 1)
+	  if(fabs(vertices->at(0).z() - el->vz()) < 1){
 	    ele_pre4->Fill(1);	  
-	  if((*heep_id_decisions)[ elPtr ])
-	    ele_pre5->Fill(1);
-	  if((*veto_id_decisions)[ elPtr ])
-	    ele_pre6->Fill(1);
+	    if((*heep_id_decisions)[ elPtr ])
+	      ele_pre5->Fill(1);
+	    if((*veto_id_decisions)[ elPtr ])
+	      ele_pre6->Fill(1);
+
+	    isPassVeto  = (*veto_id_decisions)[ elPtr ];
+	    //isPassLoose = (*loose_id_decisions)[ elPtr ];
+	    //isPassMedium = (*medium_id_decisions)[ elPtr ];
+	    //isPassTight = (*tight_id_decisions)[ elPtr ];
+	    isPassHEEP = (*heep_id_decisions)[ elPtr ];
+	  }
 	}
       }
-
-       bool isPassVeto  = (*veto_id_decisions)[ elPtr ];
-       //bool isPassLoose = (*loose_id_decisions)[ elPtr ];
-       //bool isPassMedium = (*medium_id_decisions)[ elPtr ];
-       //bool isPassTight = (*tight_id_decisions)[ elPtr ];
-       bool isPassHEEP = (*heep_id_decisions)[ elPtr ];
-
+      
       if(isPassHEEP){
 	eles.push_back(*el);
 	ge_pt ->Fill(el->pt());
@@ -353,6 +357,7 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
     if(pjets.size() > 1)
       Meejj = (pjets[0].p4()+pjets[1].p4()+eles[0].p4()+eles[1].p4()).M();
   }
+  
   if(Mee > dilepton_mass_cut && Meejj > lljj_mass_cut){
     e1_pt->Fill(eles[0].pt());
     e1_eta->Fill(eles[0].eta());

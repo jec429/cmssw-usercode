@@ -1,9 +1,18 @@
-# ROOT files #
+##############
+#    Files   #
 ##############
 
 *.root
+*.txt
 
+#########
 # Psets #
 #########
 
 WR_Analyzer/test/psets
+
+###########
+# Singles #
+###########
+
+WR_Analyzer/test/crab.history
