@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import os,sys
+sys.argv.append('-b')
 import ROOT
 
 def differentiate_stat_box(hist, movement=1, new_color=None, new_size=None, color_from_hist=True):
@@ -36,4 +38,21 @@ def differentiate_stat_box(hist, movement=1, new_color=None, new_size=None, colo
     s.SetX2NDC(x2 - (x2-x1)*m)
     s.SetY1NDC(y1 - (y2-y1)*n)
     s.SetY2NDC(y2 - (y2-y1)*n)
+
+def print_histos(root_file,formats):
+    """Print all the histograms from a ROOT file
+    in each of the formats."""
+    
+    f = ROOT.TFile(root_file)
+    os.system('mkdir -p plots/print_histos/'+root_file.split('/')[-1][:-5])
+    for x in f.GetListOfKeys():
+        d = f.GetDirectory(x.GetName())
+        for y in d.GetListOfKeys():
+            c1 = ROOT.TCanvas("c1","Canvas",600,600)        
+            a = ''+y.GetName()
+            h = d.Get(a)
+            h.Draw()
+            for i in formats:
+                c1.Print('plots/print_histos/'+root_file.split('/')[-1][:-5]+'/'+ a +'.'+i)
+            c1 = 0
 

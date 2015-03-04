@@ -15,5 +15,6 @@ ana = cms.EDAnalyzer('WR_Analyzer',
                     jet_pt_min = cms.double(40),
                     jet_eta_max = cms.double(2.5),
                     dilepton_mass_cut = cms.double(0.0),
-                    lljj_mass_cut = cms.double(0.0)
+                    lljj_mass_cut = cms.double(0.0),
+                    first_l_pt_cut = cms.double(0.0)
                     )

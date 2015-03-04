@@ -37,8 +37,10 @@ private:
   TH1F* M_eejj;
   TH1F* M_emujj;
   TH1F* M_mumujj;
-  TH1F* M_N1;
-  TH1F* M_N2;
+  TH1F* M_N1_ee;
+  TH1F* M_N2_ee;
+  TH1F* M_N1_mumu;
+  TH1F* M_N2_mumu;
   TH1F* mMET;
   TH1F* jet_pt;
   TH1F* jet1_pt;
@@ -62,15 +64,30 @@ private:
   TH1F* mu1_phi;
   TH1F* mu2_phi;
 
-  TH1F* deta_leptons;
-  TH1F* dphi_leptons;
+  TH1F* deta_ee;
+  TH1F* dphi_ee;
+  TH1F* deta_mumu;
+  TH1F* dphi_mumu;
   TH1F* deta_jets;
   TH1F* dphi_jets;
 
-  TH1F* deta_jjl1;
-  TH1F* deta_jjl2;
-  TH1F* dphi_jjl1;
-  TH1F* dphi_jjl2;
+  TH1F* deta_jje1;
+  TH1F* deta_jje2;
+  TH1F* dphi_jje1;
+  TH1F* dphi_jje2;
+  TH1F* deta_jjmu1;
+  TH1F* deta_jjmu2;
+  TH1F* dphi_jjmu1;
+  TH1F* dphi_jjmu2;
+
+  TH1F* dR_e1j1;
+  TH1F* dR_e1j2;
+  TH1F* dR_e2j1;
+  TH1F* dR_e2j2;
+  TH1F* dR_mu1j1;
+  TH1F* dR_mu1j2;
+  TH1F* dR_mu2j1;
+  TH1F* dR_mu2j2;
 
   TH1F* N_pv;
   TH1F* N_jets;
@@ -97,8 +114,10 @@ GenHistos::GenHistos(const edm::ParameterSet& cfg)
   M_eejj = fs->make<TH1F>("M_eejj", "", 100, 0, 6000);
   M_emujj = fs->make<TH1F>("M_emujj", "", 100, 0, 6000);
   M_mumujj = fs->make<TH1F>("M_mumujj", "", 100, 0, 6000);
-  M_N1 = fs->make<TH1F>("M_N1", "", 100, 0, 5000);
-  M_N2 = fs->make<TH1F>("M_N2", "", 100, 0, 5000);
+  M_N1_ee = fs->make<TH1F>("M_N1_ee", "", 100, 0, 5000);
+  M_N2_ee = fs->make<TH1F>("M_N2_ee", "", 100, 0, 5000);
+  M_N1_mumu = fs->make<TH1F>("M_N1_mumu", "", 100, 0, 5000);
+  M_N2_mumu = fs->make<TH1F>("M_N2_mumu", "", 100, 0, 5000);
   mMET = fs->make<TH1F>("mMET", "", 100, 0, 1000);
   jet_pt = fs->make<TH1F>("jet_pt", "", 100, 0, 2000);
   jet1_pt = fs->make<TH1F>("jet1_pt", "", 100, 0, 2000);
@@ -122,15 +141,31 @@ GenHistos::GenHistos(const edm::ParameterSet& cfg)
   mu1_phi = fs->make<TH1F>("mu1_phi", "", 100, -3.15, 3.15);
   mu2_phi = fs->make<TH1F>("mu2_phi", "", 100, -3.15, 3.15);
 
-  deta_leptons = fs->make<TH1F>("deta_leptons", "", 100, -5, 5);
-  dphi_leptons = fs->make<TH1F>("dphi_leptons", "", 100, -3.15, 3.15);
+  deta_ee = fs->make<TH1F>("deta_ee", "", 100, -5, 5);
+  dphi_ee = fs->make<TH1F>("dphi_ee", "", 100, -3.15, 3.15);
+  deta_mumu = fs->make<TH1F>("deta_mumu", "", 100, -5, 5);
+  dphi_mumu = fs->make<TH1F>("dphi_mumu", "", 100, -3.15, 3.15);
   deta_jets = fs->make<TH1F>("deta_jets", "", 100, -5, 5);
   dphi_jets = fs->make<TH1F>("dphi_jets", "", 100, -3.15, 3.15);
 
-  deta_jjl1 = fs->make<TH1F>("deta_jjl1", "", 100, -5, 5);
-  dphi_jjl1 = fs->make<TH1F>("dphi_jjl1", "", 100, -3.15, 3.15);
-  deta_jjl2 = fs->make<TH1F>("deta_jjl2", "", 100, -5, 5);
-  dphi_jjl2 = fs->make<TH1F>("dphi_jjl2", "", 100, -3.15, 3.15);
+  deta_jje1 = fs->make<TH1F>("deta_jje1", "", 100, -5, 5);
+  dphi_jje1 = fs->make<TH1F>("dphi_jje1", "", 100, -3.15, 3.15);
+  deta_jje2 = fs->make<TH1F>("deta_jje2", "", 100, -5, 5);
+  dphi_jje2 = fs->make<TH1F>("dphi_jje2", "", 100, -3.15, 3.15);
+  deta_jjmu1 = fs->make<TH1F>("deta_jjmu1", "", 100, -5, 5);
+  dphi_jjmu1 = fs->make<TH1F>("dphi_jjmu1", "", 100, -3.15, 3.15);
+  deta_jjmu2 = fs->make<TH1F>("deta_jjmu2", "", 100, -5, 5);
+  dphi_jjmu2 = fs->make<TH1F>("dphi_jjmu2", "", 100, -3.15, 3.15);
+
+  dR_e1j1 = fs->make<TH1F>("dR_e1j1", "", 100, 0, 1);
+  dR_e1j2 = fs->make<TH1F>("dR_e1j2", "", 100, 0, 1);
+  dR_e2j1 = fs->make<TH1F>("dR_e2j1", "", 100, 0, 1);
+  dR_e2j2 = fs->make<TH1F>("dR_e2j2", "", 100, 0, 1);
+
+  dR_mu1j1 = fs->make<TH1F>("dR_mu1j1", "", 100, 0, 1);
+  dR_mu1j2 = fs->make<TH1F>("dR_mu1j2", "", 100, 0, 1);
+  dR_mu2j1 = fs->make<TH1F>("dR_mu2j1", "", 100, 0, 1);
+  dR_mu2j2 = fs->make<TH1F>("dR_mu2j2", "", 100, 0, 1);
 
   N_pv = fs->make<TH1F>("N_pv", "", 100, 0, 30);
   N_jets = fs->make<TH1F>("N_jets", "", 40, 0, 40);
@@ -145,6 +180,7 @@ void GenHistos::analyze(const edm::Event& event, const edm::EventSetup& setup) {
   event.getByLabel(gen_src, gen_particles);
   //std::cout<<"EVENT"<<std::endl;
   std::vector<reco::GenParticle> eles;
+  std::vector<reco::GenParticle> mus;
   std::vector<reco::GenParticle> WR_daughters;
   std::vector<reco::GenJet> jets;  
 
@@ -166,7 +202,16 @@ void GenHistos::analyze(const edm::Event& event, const edm::EventSetup& setup) {
 	if((fabs(gen.mother()->pdgId()) == 11) || (fabs(gen.mother()->pdgId()) == 24) || (fabs(gen.mother()->pdgId()) > 9900000))
 	  eles.push_back(gen);
       }
-    } 
+    }
+    if(fabs(gen.pdgId()) == 13) {
+      //std::cout<<"status="<<gen.status()<<std::endl;
+      if(gen.mother() != 0){
+	if((fabs(gen.mother()->pdgId()) == 13) || (fabs(gen.mother()->pdgId()) == 24) || (fabs(gen.mother()->pdgId()) > 9900000))
+	  mus.push_back(gen);
+      }
+    }
+
+
   }
 
   PV_z->Fill(gen_particles->at(2).vz());
@@ -200,6 +245,13 @@ void GenHistos::analyze(const edm::Event& event, const edm::EventSetup& setup) {
     Mee = (eles[0].p4()+eles[1].p4()).M();
     Meejj = (jets[0].p4()+jets[1].p4()+eles[0].p4()+eles[1].p4()).M();
   }
+  double Mmumu = 0;
+  double Mmumujj = 0;
+
+  if(mus.size() > 1){
+    Mmumu = (mus[0].p4()+mus[1].p4()).M();
+    Mmumujj = (jets[0].p4()+jets[1].p4()+mus[0].p4()+mus[1].p4()).M();
+  }
   //std::cout<<"EVENT2"<<std::endl;
   if(Mee > dilepton_mass_cut && Meejj > lljj_mass_cut){
     e1_pt->Fill(eles[0].pt());
@@ -212,38 +264,58 @@ void GenHistos::analyze(const edm::Event& event, const edm::EventSetup& setup) {
     e2_phi->Fill(eles[1].phi());
     e2_dz->Fill(fabs(eles[1].vz() - gen_particles->at(2).vz()));
 
-    deta_leptons->Fill(eles[0].eta()-eles[1].eta());
-    dphi_leptons->Fill(deltaPhi(eles[0].phi(),eles[1].phi()));
-    //std::cout<<"EVENT3"<<std::endl;
-    M_N1->Fill((jets[0].p4()+jets[1].p4()+eles[0].p4()).M());
-    M_N2->Fill((jets[0].p4()+jets[1].p4()+eles[1].p4()).M());    
+    deta_ee->Fill(eles[0].eta()-eles[1].eta());
+    dphi_ee->Fill(deltaPhi(eles[0].phi(),eles[1].phi()));
+    M_N1_ee->Fill((jets[0].p4()+jets[1].p4()+eles[0].p4()).M());
+    M_N2_ee->Fill((jets[0].p4()+jets[1].p4()+eles[1].p4()).M());    
     M_ee->Fill(Mee);
-    M_eejj->Fill(Meejj);
-    jet1_pt->Fill(jets[0].pt());
-    jet1_eta->Fill(jets[0].eta());
-    jet1_phi->Fill(jets[0].phi());  
-    jet2_pt->Fill(jets[1].pt());
-    jet2_eta->Fill(jets[1].eta());
-    jet2_phi->Fill(jets[1].phi());  
-    deta_jets->Fill(jets[0].eta()-jets[1].eta());
-    dphi_jets->Fill(deltaPhi(jets[0].phi(),jets[1].phi()));
-    deta_jjl1->Fill((jets[0].p4()+jets[1].p4()+eles[0].p4()).eta());
-    dphi_jjl1->Fill((jets[0].p4()+jets[1].p4()+eles[0].p4()).phi());
-    deta_jjl2->Fill((jets[0].p4()+jets[1].p4()+eles[1].p4()).eta());
-    dphi_jjl2->Fill((jets[0].p4()+jets[1].p4()+eles[1].p4()).phi());
-    M_jj->Fill((jets[0].p4()+jets[1].p4()).M());
+    M_eejj->Fill(Meejj);    
+    deta_jje1->Fill((jets[0].p4()+jets[1].p4()+eles[0].p4()).eta());
+    dphi_jje1->Fill((jets[0].p4()+jets[1].p4()+eles[0].p4()).phi());
+    deta_jje2->Fill((jets[0].p4()+jets[1].p4()+eles[1].p4()).eta());
+    dphi_jje2->Fill((jets[0].p4()+jets[1].p4()+eles[1].p4()).phi());
+    dR_e1j1->Fill(deltaR(eles[0],jets[0]));    
+    dR_e1j2->Fill(deltaR(eles[0],jets[1]));    
+    dR_e2j1->Fill(deltaR(eles[1],jets[0]));    
+    dR_e2j2->Fill(deltaR(eles[1],jets[1])); 
   }
+
+  jet1_pt->Fill(jets[0].pt());
+  jet1_eta->Fill(jets[0].eta());
+  jet1_phi->Fill(jets[0].phi());  
+  jet2_pt->Fill(jets[1].pt());
+  jet2_eta->Fill(jets[1].eta());
+  jet2_phi->Fill(jets[1].phi());  
+  M_jj->Fill((jets[0].p4()+jets[1].p4()).M());
+  deta_jets->Fill(jets[0].eta()-jets[1].eta());
+  dphi_jets->Fill(deltaPhi(jets[0].phi(),jets[1].phi()));
 
   if(WR_daughters.size()>3)
     M_eeqq->Fill((WR_daughters[0].p4()+WR_daughters[1].p4()+WR_daughters[2].p4()+WR_daughters[3].p4()).M());  
   
-  //edm::Handle<reco::GenMETCollection> gen_met;
-  //event.getByLabel("genMetTrue", gen_met);
-
-  //reco::GenMET met;
-  //met = gen_met->front();
-  //const double MET = met.pt();
-  //mMET->Fill(MET);
+  if(Mmumu > dilepton_mass_cut && Mmumujj > lljj_mass_cut){
+    mu1_pt->Fill(mus[0].pt());
+    mu1_eta->Fill(mus[0].eta());
+    mu1_phi->Fill(mus[0].phi());
+    //std::cout<<"EVENT1"<<std::endl;
+    mu2_pt->Fill(mus[1].pt());
+    mu2_eta->Fill(mus[1].eta());
+    mu2_phi->Fill(mus[1].phi());
+    M_mumu->Fill(Mmumu);
+    M_mumujj->Fill(Mmumujj);
+    deta_mumu->Fill(mus[0].eta()-mus[1].eta());
+    dphi_mumu->Fill(deltaPhi(mus[0].phi(),mus[1].phi()));
+    M_N1_mumu->Fill((jets[0].p4()+jets[1].p4()+mus[0].p4()).M());
+    M_N2_mumu->Fill((jets[0].p4()+jets[1].p4()+mus[1].p4()).M());
+    deta_jjmu1->Fill((jets[0].p4()+jets[1].p4()+mus[0].p4()).eta());
+    dphi_jjmu1->Fill((jets[0].p4()+jets[1].p4()+mus[0].p4()).phi());
+    deta_jjmu2->Fill((jets[0].p4()+jets[1].p4()+mus[1].p4()).eta());
+    dphi_jjmu2->Fill((jets[0].p4()+jets[1].p4()+mus[1].p4()).phi());
+    dR_mu1j1->Fill(deltaR(mus[0],jets[0]));    
+    dR_mu1j2->Fill(deltaR(mus[0],jets[1]));    
+    dR_mu2j1->Fill(deltaR(mus[1],jets[0]));    
+    dR_mu2j2->Fill(deltaR(mus[1],jets[1]));    
+  }
 
   N_pv->Fill(1);
   N_jets->Fill(jets.size());

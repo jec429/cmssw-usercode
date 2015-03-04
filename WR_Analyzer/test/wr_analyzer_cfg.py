@@ -30,8 +30,8 @@ for s in Samples.signal_samples:
         
 #process.source.fileNames = file_list(dset+'step4_PAT*.root',True)
 #process.source.fileNames = file_list('/DYJetsToLL_M-50_13TeV-madgraph-pythia8/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',False)
-process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_EE_2000_reco/EXO-Phys14DR-00009_*.root',True)
-#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_2000_reco/EXO-Phys14DR-00009_*.root',True)
+#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_EE_2000_reco/EXO-Phys14DR-00009_*.root',True)
+process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_2000_reco/EXO-Phys14DR-00009_*.root',True)
 outfile = 'out_EXO.root'
 
 if ttbar:
@@ -100,7 +100,7 @@ setupVIDSelection(process.egmGsfElectronIDs,process.heeptest2)
 
 from HLTrigger.HLTfilters.hltHighLevel_cfi import hltHighLevel
 process.triggerFilter = hltHighLevel.clone()
-process.triggerFilter.HLTPaths = ['HLT_Ele23_Ele12_CaloId_TrackId_Iso_v*','HLT_IsoMu24_eta2p1_IterTrk02_v*']
+process.triggerFilter.HLTPaths = ['HLT_Photon155_v*','HLT_Mu40_v*']
 process.triggerFilter.andOr = True # = OR
 #for name, path in process.paths.items():
  #   if not name.startswith('eventCleaning'):
@@ -116,11 +116,14 @@ process.fltr.SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring('ptrig
 process.ana2 = process.ana.clone(dilepton_mass_cut = cms.double(200.0))
 process.ana3 = process.ana.clone(dilepton_mass_cut = cms.double(200.0),
                                    lljj_mass_cut = cms.double(600.0))
+process.ana4 = process.ana.clone(dilepton_mass_cut = cms.double(200.0),
+                                   lljj_mass_cut = cms.double(600.0),
+                                   first_l_pt_cut = cms.double(100.0))
 
 process.p = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana)
 process.p2 = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana2)
 process.p3 = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana3)
-
+process.p4 = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana4)
 
 ###################################################################################################
 ###################################################################################################
@@ -136,7 +139,7 @@ if __name__ == '__main__' and hasattr(sys, 'argv') and submit:
         #crab2_submit('ttbar',-1,'all')
         crab3_submit('ttbar',-1,'all')
     if dyjets:
-        for x in ['HT-100To200','HT-200To400','HT-400To600','HT-600ToInf']:
+        for x in ['HT-100to200','HT-200to400','HT-400to600','HT-600toInf']:
         #for x in ['M-200To400','M-400To800','M-800To1400','M-1400To2300','M-3500To4500','M-4500To6000','M-6000To7500','M-7500To8500',]:
             #crab2_submit('dyjets',-1,x)
             crab3_submit('dyjets',-1,x)

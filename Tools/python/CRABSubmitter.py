@@ -164,9 +164,20 @@ config.Site.storageSite = 'T3_US_FNALLPC'
                 nevents = Samples.dyjets_samples[k].nfiles
     elif 'signal' in arg[0]:
         index = 3
-        s = arg[0].split('_')[-1] #TODO: find the signal sample        
-        datasets[3] = Samples.signal_gensamples[0].dataset
-        nevents = Samples.signal_gensamples[0].nfiles
+        k = 0
+        if 'EE' in arg[0]:
+            for i,s in enumerate(Samples.EE_signal_gensamples):
+                if arg[2] in s.dataset:
+                    k = i       
+            datasets[3] = Samples.EE_signal_gensamples[0].dataset
+            nevents = Samples.EE_signal_gensamples[0].nfiles
+        elif 'MUMU' in arg[0]:
+            for i,s in enumerate(Samples.MUMU_signal_gensamples):
+                if arg[2] in s.dataset:
+                    k = i       
+            datasets[3] = Samples.MUMU_signal_gensamples[0].dataset
+            nevents = Samples.MUMU_signal_gensamples[0].nfiles
+
            
     vd = locals()
     vd['ui_dir'] = uidirs[index]
@@ -180,9 +191,6 @@ config.Site.storageSite = 'T3_US_FNALLPC'
         vd['pset'] = 'step1_cfg.py'
         vd['split'] = 'EventBased'
         crab_cfg = crab_cfg + "config.JobType.scriptExe = 'nstep.sh'\n        config.JobType.inputFiles = ['step2_cfg.py','step3_cfg.py','step4_cfg.py']\n        config.JobType.outputFiles = ['step4.root']\n"
-        #vd['outfile'] = 'step1.root,step4_PAT.root'
-        #vd['extra_CMSSW'] = 'get_edm_output = 0\nignore_edm_output = 1'
-        #vd['extra_USER'] = 'additional_input_files  = step2_cfg.py,step3_cfg.py,step4_cfg.py\nscript_exe		= nstep.sh'
     elif 'genhistos' in name_mod:
         vd['pset']    = 'genhistos_cfg.py'
         vd['plugin']  = 'Analysis'

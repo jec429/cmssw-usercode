@@ -45,5 +45,7 @@ dyjets_samples = [Sample('dyjets_HT100to200',2008.4,'/DYJetsToLL_M-50_HT-100to20
                   Sample('dyjets_M7500to8500',2008.4,'/DYJetsToEEMuMu_M-7500To8500_13TeV-madgraph/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',30151,2)
                   ]
 
-signal_gensamples = [Sample('WR_ee_2000',4.49E-05,'/WRToNuEToEEJJ_MW-2000_MNu-1000_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',50000,32),
-                     Sample('WR_ee_5400',4.49E-05,'/WRToNuEToEEJJ_MW-5400_MNu-2700_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',49764,1)]
+EE_signal_gensamples = [Sample('WR_EE_2000',7.07E-02,'/WRToNuEToEEJJ_MW-2000_MNu-1000_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',50000,32),
+                     Sample('WR_EE_5400',4.49E-05,'/WRToNuEToEEJJ_MW-5400_MNu-2700_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',49764,1)]
+    
+MUMU_signal_gensamples = [Sample('WR_MUMU_2000',6.22E-02,'/WRToNuMuToMuMuJJ_MW-2000_MNu-1000_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',50000,25)]

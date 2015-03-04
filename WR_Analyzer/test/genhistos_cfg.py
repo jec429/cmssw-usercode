@@ -11,7 +11,7 @@ process = cms.Process("ANA")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
                             fileNames=cms.untracked.vstring('file:/uscms/home/jchaves/private/CMSSW_7_2_2_patch2/src/MakeSamples/step0.root'),
@@ -29,8 +29,10 @@ for s in Samples.signal_samples:
         dset = s.dataset
                         
 #process.source.fileNames = file_list(dset+'step1_*.root',True)
+process.source.fileNames = file_list('/WRToNuMuToMuMuJJ_MW-2000_MNu-1000_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',False)
 #process.source.fileNames = file_list('/WRToNuEToEEJJ_MW-2000_MNu-1000_TuneCUETP8M1_13TeV-pythia8/RunIIFall14GS-MCRUN2_71_V1-v1/GEN-SIM',False)
-outfile = 'genhistos0.root'
+#process.source.fileNames = file_list('/MinBias/jchavesb-Nstep_MUMU_2000-86f6c000767ac724ac000a9ef124b73d/USER instance=prod/phys03',False)
+outfile = 'genhistos.root'
 
 if ttbar:
     process.source.fileNames = file_list(Samples.ttbar_samples[0].dataset,False)
@@ -70,10 +72,12 @@ process.p3 = cms.Path(process.ana3)
 # name = dyjets
 if __name__ == '__main__' and hasattr(sys, 'argv') and submit:
     from JChaves.Tools.CRABSubmitter import *
-    crab3_submit('signal_2000',-1,'genhistos')
+    if 'signal' in sys.argv:
+        crab3_submit('EE_signal',-1,'EE_MW-2000_genhistos')
+        crab3_submit('MUMU_signal',-1,'MUMU_MW-2000_genhistos')
     if ttbar:
         #crab2_submit('ttbar',-1,'genhistos')
         crab3_submit('ttbar',-1,'genhistos')
     if dyjets:
         for x in ['HT-100to200_genhistos','HT-200to400_genhistos','HT-400to600_genhistos','HT-600toInf_genhistos']:
-            crab2_submit('dyjets',-1,x)
+            crab3_submit('dyjets',-1,x)

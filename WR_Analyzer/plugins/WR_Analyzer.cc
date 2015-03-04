@@ -41,6 +41,7 @@ private:
   const double jet_eta_max;
   const double dilepton_mass_cut;
   const double lljj_mass_cut;
+  const double first_l_pt_cut;
 
   TH1F* ParticleID;
   TH1F* electronID;
@@ -53,8 +54,10 @@ private:
   TH1F* M_eejj;
   TH1F* M_emujj;
   TH1F* M_mumujj;
-  TH1F* M_N1;
-  TH1F* M_N2;
+  TH1F* M_N1_ee;
+  TH1F* M_N2_ee;
+  TH1F* M_N1_mumu;
+  TH1F* M_N2_mumu;
   TH1F* mMET;
   TH1F* jet_pt;
   TH1F* jet1_pt;
@@ -78,10 +81,21 @@ private:
   TH1F* mu1_phi;
   TH1F* mu2_phi;
 
-  TH1F* deta_leptons;
-  TH1F* dphi_leptons;
+  TH1F* deta_ee;
+  TH1F* dphi_ee;
+  TH1F* deta_mumu;
+  TH1F* dphi_mumu;
   TH1F* deta_jets;
   TH1F* dphi_jets;
+
+  TH1F* dR_e1j1;
+  TH1F* dR_e1j2;
+  TH1F* dR_e2j1;
+  TH1F* dR_e2j2;
+  TH1F* dR_mu1j1;
+  TH1F* dR_mu1j2;
+  TH1F* dR_mu2j1;
+  TH1F* dR_mu2j2;
 
   TH1F* N_pv;
   TH1F* N_jets;
@@ -130,7 +144,9 @@ WR_Analyzer::WR_Analyzer(const edm::ParameterSet& cfg)
     jet_pt_min(cfg.getParameter<double>("jet_pt_min")),  
     jet_eta_max(cfg.getParameter<double>("jet_eta_max")),
     dilepton_mass_cut(cfg.getParameter<double>("dilepton_mass_cut")),
-    lljj_mass_cut(cfg.getParameter<double>("lljj_mass_cut"))
+    lljj_mass_cut(cfg.getParameter<double>("lljj_mass_cut")),
+    first_l_pt_cut(cfg.getParameter<double>("first_l_pt_cut"))
+
 {
   edm::Service<TFileService> fs;
   ele_pre0 = fs->make<TH1F>("ele_pre0", "", 2, 0, 2);
@@ -158,8 +174,10 @@ WR_Analyzer::WR_Analyzer(const edm::ParameterSet& cfg)
   M_eejj = fs->make<TH1F>("M_eejj", "", 100, 0, 6000);
   M_emujj = fs->make<TH1F>("M_emujj", "", 100, 0, 6000);
   M_mumujj = fs->make<TH1F>("M_mumujj", "", 100, 0, 6000);
-  M_N1 = fs->make<TH1F>("M_N1", "", 100, 0, 5000);
-  M_N2 = fs->make<TH1F>("M_N2", "", 100, 0, 5000);
+  M_N1_ee = fs->make<TH1F>("M_N1_ee", "", 100, 0, 5000);
+  M_N2_ee = fs->make<TH1F>("M_N2_ee", "", 100, 0, 5000);
+  M_N1_mumu = fs->make<TH1F>("M_N1_mumu", "", 100, 0, 5000);
+  M_N2_mumu = fs->make<TH1F>("M_N2_mumu", "", 100, 0, 5000);
   mMET = fs->make<TH1F>("mMET", "", 100, 0, 1000);
   jet_pt = fs->make<TH1F>("jet_pt", "", 100, 0, 2000);
   jet1_pt = fs->make<TH1F>("jet1_pt", "", 100, 0, 2000);
@@ -183,10 +201,22 @@ WR_Analyzer::WR_Analyzer(const edm::ParameterSet& cfg)
   mu1_phi = fs->make<TH1F>("mu1_phi", "", 100, -3.15, 3.15);
   mu2_phi = fs->make<TH1F>("mu2_phi", "", 100, -3.15, 3.15);
 
-  deta_leptons = fs->make<TH1F>("deta_leptons", "", 100, -5, 5);
-  dphi_leptons = fs->make<TH1F>("dphi_leptons", "", 100, -3.15, 3.15);
+  deta_ee = fs->make<TH1F>("deta_ee", "", 100, -5, 5);
+  dphi_ee = fs->make<TH1F>("dphi_ee", "", 100, -3.15, 3.15);
+  deta_mumu = fs->make<TH1F>("deta_mumu", "", 100, -5, 5);
+  dphi_mumu = fs->make<TH1F>("dphi_mumu", "", 100, -3.15, 3.15);
   deta_jets = fs->make<TH1F>("deta_jets", "", 100, -5, 5);
   dphi_jets = fs->make<TH1F>("dphi_jets", "", 100, -3.15, 3.15);
+
+  dR_e1j1 = fs->make<TH1F>("dR_e1j1", "", 100, 0, 1);
+  dR_e1j2 = fs->make<TH1F>("dR_e1j2", "", 100, 0, 1);
+  dR_e2j1 = fs->make<TH1F>("dR_e2j1", "", 100, 0, 1);
+  dR_e2j2 = fs->make<TH1F>("dR_e2j2", "", 100, 0, 1);
+
+  dR_mu1j1 = fs->make<TH1F>("dR_mu1j1", "", 100, 0, 1);
+  dR_mu1j2 = fs->make<TH1F>("dR_mu1j2", "", 100, 0, 1);
+  dR_mu2j1 = fs->make<TH1F>("dR_mu2j1", "", 100, 0, 1);
+  dR_mu2j2 = fs->make<TH1F>("dR_mu2j2", "", 100, 0, 1);
 
   N_pv = fs->make<TH1F>("N_pv", "", 100, 0, 30);
   N_jets = fs->make<TH1F>("N_jets", "", 40, 0, 40);
@@ -253,9 +283,18 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
     ParticleID->Fill(gen.pdgId());
   }
 
+for(const pat::Jet& jet : *jets){  
+    if((jet.pt() > jet_pt_min) && (fabs(jet.eta()) < jet_eta_max) && //(jet.getPFConstituents().size() > 1) & 
+       (jet.neutralEmEnergyFraction() < 0.99) && (jet.chargedEmEnergyFraction() < 0.99) && 
+       (jet.neutralHadronEnergyFraction() < 0.99) && (jet.chargedHadronEnergyFraction() > 0.0) && 
+       (jet.muonEnergyFraction() < 0.8 ) && (jet.chargedMultiplicity() > 0)){   
+      jet_pt->Fill(jet.pt());
+      pjets.push_back(jet);    
+    }
+  }
+
   for(std::vector<pat::Electron>::const_iterator el = electrons->begin();
        el != electrons->end(); el++){
-
     // Look up the ID decision for this electron in 
     // the ValueMap object and store it. We need a Ptr object as the key.
     const Ptr<pat::Electron> elPtr(electrons, el - electrons->begin() );   
@@ -286,20 +325,26 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
 	}
       }
       
-      if(isPassHEEP){
+      bool not_in_jet = true;
+      for(auto jet:pjets){
+	if(deltaR(jet,*el) < 0.5){
+	  cout<<"Inside the jet"<<endl;
+	  not_in_jet = false;
+	}
+      }
+            
+      if(isPassHEEP && not_in_jet){
 	eles.push_back(*el);
 	ge_pt ->Fill(el->pt());
 	ge_eta ->Fill(el->eta());
 	ge_mass ->Fill(el->mass());
 	ge_pdgId ->Fill(el->pdgId());
-	//ge_idAvailable ->Fill(el->isElectronIDAvailable("cutBasedElectronID-CSA14-PU20bx25-V0-standalone-veto"));
       }
       else {
 	fe_pt ->Fill(el->pt());
 	fe_eta ->Fill(el->eta());
 	fe_mass ->Fill(el->mass());
 	fe_pdgId ->Fill(el->pdgId());
-	//fe_idAvailable ->Fill(el->isElectronIDAvailable("cutBasedElectronID-CSA14-PU20bx25-V0-standalone-veto"));
       }
       electronID->Fill(isPassHEEP);
       electronID2->Fill(isPassVeto);
@@ -338,15 +383,7 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
     gjets.push_back(gen_jets->at(1));
   }
   
-  for(const pat::Jet& jet : *jets){  
-    if((jet.pt() > jet_pt_min) && (fabs(jet.eta()) < jet_eta_max) && //(jet.getPFConstituents().size() > 1) & 
-       (jet.neutralEmEnergyFraction() < 0.99) && (jet.chargedEmEnergyFraction() < 0.99) && 
-       (jet.neutralHadronEnergyFraction() < 0.99) && (jet.chargedHadronEnergyFraction() > 0.0) && 
-       (jet.muonEnergyFraction() < 0.8 ) && (jet.chargedMultiplicity() > 0)){   
-      jet_pt->Fill(jet.pt());
-      pjets.push_back(jet);    
-    }
-  }
+  
 
   pat::MET met = mets->at(0);
   double Mee = 0.0;
@@ -359,19 +396,25 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
   }
   
   if(Mee > dilepton_mass_cut && Meejj > lljj_mass_cut){
-    e1_pt->Fill(eles[0].pt());
-    e1_eta->Fill(eles[0].eta());
-    e1_phi->Fill(eles[0].phi());
-    e2_pt->Fill(eles[1].pt());
-    e2_eta->Fill(eles[1].eta());
-    e2_phi->Fill(eles[1].phi());
-    deta_leptons->Fill(eles[0].eta()-eles[1].eta());
-    dphi_leptons->Fill(deltaPhi(eles[0].phi(),eles[1].phi()));
-    if(pjets.size() > 1){
-      M_N1->Fill((pjets[0].p4()+pjets[1].p4()+eles[0].p4()).M());
-      M_N2->Fill((pjets[0].p4()+pjets[1].p4()+eles[1].p4()).M());    
+    if(eles[0].pt() > first_l_pt_cut){
+      e1_pt->Fill(eles[0].pt());
+      e1_eta->Fill(eles[0].eta());
+      e1_phi->Fill(eles[0].phi());
+      e2_pt->Fill(eles[1].pt());
+      e2_eta->Fill(eles[1].eta());
+      e2_phi->Fill(eles[1].phi());
       M_ee->Fill(Mee);
-      M_eejj->Fill(Meejj);      
+      deta_ee->Fill(eles[0].eta()-eles[1].eta());
+      dphi_ee->Fill(deltaPhi(eles[0].phi(),eles[1].phi()));
+      if(pjets.size() > 1){
+	M_N1_ee->Fill((pjets[0].p4()+pjets[1].p4()+eles[0].p4()).M());
+	M_N2_ee->Fill((pjets[0].p4()+pjets[1].p4()+eles[1].p4()).M());    
+	M_eejj->Fill(Meejj);  
+	dR_e1j1->Fill(deltaR(eles[0],pjets[0]));    
+	dR_e1j2->Fill(deltaR(eles[0],pjets[1]));    
+	dR_e2j1->Fill(deltaR(eles[1],pjets[0]));    
+	dR_e2j2->Fill(deltaR(eles[1],pjets[1]));    
+      }
     }    
   }
 
@@ -398,15 +441,25 @@ void WR_Analyzer::analyze(const edm::Event& event, const edm::EventSetup& setup)
       Mmumujj = (pjets[0].p4()+pjets[1].p4()+mus[0].p4()+mus[1].p4()).M();
   }
   if(Mmumu > dilepton_mass_cut && Mmumujj > lljj_mass_cut){
-    mu1_pt->Fill(mus[0].p4().pt());
-    mu1_eta->Fill(mus[0].p4().eta());
-    mu1_phi->Fill(mus[0].p4().phi());
-    mu2_pt->Fill(mus[1].p4().pt());
-    mu2_eta->Fill(mus[1].p4().eta());
-    mu2_phi->Fill(mus[1].p4().phi());
-    M_mumu->Fill(Mmumu);
-    if(pjets.size() > 1){
-      M_mumujj->Fill(Mmumujj);
+    if(mus[0].pt() > first_l_pt_cut){
+      mu1_pt->Fill(mus[0].p4().pt());
+      mu1_eta->Fill(mus[0].p4().eta());
+      mu1_phi->Fill(mus[0].p4().phi());
+      mu2_pt->Fill(mus[1].p4().pt());
+      mu2_eta->Fill(mus[1].p4().eta());
+      mu2_phi->Fill(mus[1].p4().phi());
+      M_mumu->Fill(Mmumu);
+      deta_mumu->Fill(mus[0].eta()-mus[1].eta());
+      dphi_mumu->Fill(deltaPhi(mus[0].phi(),mus[1].phi()));
+      if(pjets.size() > 1){
+	M_N1_mumu->Fill((pjets[0].p4()+pjets[1].p4()+mus[0].p4()).M());
+	M_N2_mumu->Fill((pjets[0].p4()+pjets[1].p4()+mus[1].p4()).M());    
+	M_mumujj->Fill(Mmumujj);
+	dR_mu1j1->Fill(deltaR(mus[0],pjets[0]));    
+	dR_mu1j2->Fill(deltaR(mus[0],pjets[1]));    
+	dR_mu2j1->Fill(deltaR(mus[1],pjets[0]));    
+	dR_mu2j2->Fill(deltaR(mus[1],pjets[1]));    
+      }
     }
   }
 

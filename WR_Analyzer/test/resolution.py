@@ -15,7 +15,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
-                            fileNames=cms.untracked.vstring('file:EXO-Phys14DR-00009.root'),
+                            fileNames=cms.untracked.vstring('root://cmsxrootd-site.fnal.gov//store/mc/Summer12/WRToNuLeptonToLLJJ_MW-3500_MNu-1750_TuneZ2star_8TeV-pythia6-tauola/GEN-SIM/START50_V13-v2/0000/04317A88-1FA2-E111-8D7A-485B39897242.root'),
                             )
 # This only works interactively
 mass = '_'

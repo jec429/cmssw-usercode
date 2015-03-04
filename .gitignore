@@ -16,3 +16,10 @@ WR_Analyzer/test/psets
 ###########
 
 WR_Analyzer/test/crab.history
+WR_Analyzer/test/temp.py
+
+###############
+# Directories #
+###############
+
+MakeSamples
