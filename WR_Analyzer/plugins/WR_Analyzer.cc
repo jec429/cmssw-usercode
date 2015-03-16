@@ -42,6 +42,7 @@ private:
   const double dilepton_mass_cut;
   const double lljj_mass_cut;
   const double first_l_pt_cut;
+  const double lepton_cone_cut;
 
   TH1F* ParticleID;
   TH1F* electronID;
@@ -145,7 +146,8 @@ WR_Analyzer::WR_Analyzer(const edm::ParameterSet& cfg)
     jet_eta_max(cfg.getParameter<double>("jet_eta_max")),
     dilepton_mass_cut(cfg.getParameter<double>("dilepton_mass_cut")),
     lljj_mass_cut(cfg.getParameter<double>("lljj_mass_cut")),
-    first_l_pt_cut(cfg.getParameter<double>("first_l_pt_cut"))
+    first_l_pt_cut(cfg.getParameter<double>("first_l_pt_cut")),
+    lepton_cone_cut(cfg.getParameter<double>("lepton_cone_cut"))
 
 {
   edm::Service<TFileService> fs;
@@ -327,8 +329,8 @@ for(const pat::Jet& jet : *jets){
       
       bool not_in_jet = true;
       for(auto jet:pjets){
-	if(deltaR(jet,*el) < 0.5){
-	  cout<<"Inside the jet"<<endl;
+	if(deltaR(jet,*el) < lepton_cone_cut){
+	  //cout<<"Electron inside the jet"<<endl;
 	  not_in_jet = false;
 	}
       }
@@ -374,7 +376,16 @@ for(const pat::Jet& jet : *jets){
 	}
       }
     }
-    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && mu.isHighPtMuon(primary_vertex->at(0)))
+
+    bool not_in_jet = true;
+    for(auto jet:pjets){
+      if(deltaR(jet,mu) < lepton_cone_cut){
+	//cout<<"Muon inside the jet"<<endl;
+	not_in_jet = false;
+      }
+    }
+
+    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && mu.isHighPtMuon(primary_vertex->at(0)) && not_in_jet)
       mus.push_back(mu);    
   }
 

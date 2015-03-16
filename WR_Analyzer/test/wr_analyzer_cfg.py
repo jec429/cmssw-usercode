@@ -119,11 +119,15 @@ process.ana3 = process.ana.clone(dilepton_mass_cut = cms.double(200.0),
 process.ana4 = process.ana.clone(dilepton_mass_cut = cms.double(200.0),
                                    lljj_mass_cut = cms.double(600.0),
                                    first_l_pt_cut = cms.double(100.0))
+process.ana5 = process.ana.clone(dilepton_mass_cut = cms.double(200.0),
+                                   lljj_mass_cut = cms.double(600.0),
+                                   lepton_cone_cut = cms.double(0.4))
 
 process.p = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana)
 process.p2 = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana2)
 process.p3 = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana3)
 process.p4 = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana4)
+process.p5 = cms.Path(process.egmGsfElectronIDSequence * process.fltr * process.ana5)
 
 ###################################################################################################
 ###################################################################################################
