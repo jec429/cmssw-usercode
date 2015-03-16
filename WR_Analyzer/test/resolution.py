@@ -32,6 +32,10 @@ for s in Samples.signal_samples:
 #process.source.fileNames = file_list('/DYJetsToLL_M-50_13TeV-madgraph-pythia8/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',False)
 #process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_EE_2000_reco/EXO-Phys14DR-00009_*.root',True)
 process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_2000_reco/EXO-Phys14DR-00009_*.root',True)
+#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_3000_reco/EXO-Phys14DR-00009_*.root',True)
+#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_4000_reco/EXO-Phys14DR-00009_*.root',True)
+#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_5000_reco/EXO-Phys14DR-00009_*.root',True)
+#process.source.fileNames = file_list('/eos/uscms/store/user/jchaves/Nstep_MUMU_6000_reco/EXO-Phys14DR-00009_*.root',True)
 outfile = 'resolution_EXO_MUMU.root'
 
 if ttbar:

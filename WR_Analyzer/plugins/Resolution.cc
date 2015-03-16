@@ -163,10 +163,10 @@ Resolution::Resolution(const edm::ParameterSet& cfg)
   pf_iso03 = fs->make<TH1F>("pf_iso03", "", 100, 0, 10);
   pf_iso04 = fs->make<TH1F>("pf_iso04", "", 100, 0, 10);
 
-  Mjjll = fs->make<TH1F>("Mjjll", "", 100, 0, 6000);
-  Mqqll = fs->make<TH1F>("Mqqll", "", 100, 0, 6000);
-  Mjjlglg = fs->make<TH1F>("Mjjlglg", "", 100, 0, 6000);
-  Mqqlglg = fs->make<TH1F>("Mqqlglg", "", 100, 0, 6000);
+  Mjjll = fs->make<TH1F>("Mjjll", "", 100, 0, 10000);
+  Mqqll = fs->make<TH1F>("Mqqll", "", 100, 0, 10000);
+  Mjjlglg = fs->make<TH1F>("Mjjlglg", "", 100, 0, 10000);
+  Mqqlglg = fs->make<TH1F>("Mqqlglg", "", 100, 0, 10000);
 
   typeDiff_all = fs->make<TH2F>("typeDiff_all", "", 6, 0, 6, 6, 0, 6);
   typeDiff = fs->make<TH2F>("typeDiff", "", 6, 0, 6, 6, 0, 6);
@@ -199,6 +199,7 @@ void Resolution::analyze(const edm::Event& event, const edm::EventSetup& setup) 
 
   std::vector<pat::Electron> eles;
   std::vector<pat::Muon> mus;
+  std::vector<TLorentzVector> best_mus;
   std::vector<reco::GenParticle> gen_mus;
   std::vector<reco::GenParticle> gjets;
   std::vector<reco::GenParticle> gmus_W;  
@@ -232,8 +233,13 @@ void Resolution::analyze(const edm::Event& event, const edm::EventSetup& setup) 
       }
     }
 
-    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && mu.isHighPtMuon(primary_vertex->at(0)) && MC_match)
+    if((mu.pt() > 40) && (fabs(mu.eta()) < 2.4) && mu.isHighPtMuon(primary_vertex->at(0)) && MC_match){
       mus.push_back(mu);      
+      TLorentzVector bmu;
+      if(mu.tunePMuonBestTrack().isAvailable())
+	bmu.SetPtEtaPhiM(mu.tunePMuonBestTrack()->pt(),mu.tunePMuonBestTrack()->eta(),mu.tunePMuonBestTrack()->phi(),0.1);
+      best_mus.push_back(bmu);
+    }
   }
 
   for(const pat::Jet& jet : *jets){  
@@ -368,9 +374,9 @@ void Resolution::analyze(const edm::Event& event, const edm::EventSetup& setup) 
     }
   }
   
-  if(mus.size() > 1 && pjets.size() > 1)
+  if(best_mus.size() > 1 && pjets.size() > 1)
     Mjjll->Fill((mus[0].p4()+mus[1].p4()+pjets[0].p4()+pjets[1].p4()).M());
-  if(mus.size() > 1 && gjets.size() > 1)
+  if(best_mus.size() > 1 && gjets.size() > 1)
     Mqqll->Fill((mus[0].p4()+mus[1].p4()+gjets[0].p4()+gjets[1].p4()).M());
   if(gmus_W.size() > 1 && pjets.size() > 1)
     Mjjlglg->Fill((gmus_W[0].p4()+gmus_W[1].p4()+pjets[0].p4()+pjets[1].p4()).M());
