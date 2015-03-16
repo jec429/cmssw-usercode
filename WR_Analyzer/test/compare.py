@@ -7,7 +7,7 @@ import JChaves.Tools.Samples as Samples
 sys.argv.append('-b')
 import ROOT
 
-anas = ['ana','ana2','ana3','ana4']
+anas = ['ana','ana2','ana3','ana4','ana5']
 logs = [True,False]
 signals = ['800','1000','2000','3000','4000','5000']
 signals = ['2000']
@@ -25,17 +25,17 @@ for s,t in product(signals,Samples.signal_samples):
         xsignals.append([s,t.xsection*luminosity/signal_events])
 
 fs = []
-fs.append([ROOT.TFile('plots/rootfiles/54_10_02_24_15_out_EXO_ttbar.root'),Samples.ttbar_samples[0].xsection*luminosity/ttbar_events,'ttbar'])
-fs.append([ROOT.TFile('plots/rootfiles/54_10_02_24_15_out_EXO_dyjets.root'),Samples.dyjets_samples[0].xsection*luminosity/dyjets_events,'dyjets'])
-fs.append([ROOT.TFile('plots/rootfiles/29_08_02_24_15_out_EXO_EE.root'),7.07E-02*luminosity/signal_events,'ee_2000'])
-fs.append([ROOT.TFile('plots/rootfiles/29_08_02_24_15_out_EXO_MUMU.root'),6.22E-02*luminosity/signal_events,'mumu_2000'])
+fs.append([ROOT.TFile('plots/rootfiles/20_08_03_16_15_out_EXO_dyjets.root'),1.0,'dyjets'])
+fs.append([ROOT.TFile('plots/rootfiles/20_08_03_16_15_out_EXO_ttbar.root'),Samples.ttbar_samples[0].xsection*luminosity/ttbar_events,'ttbar'])
+fs.append([ROOT.TFile('plots/rootfiles/00_08_03_16_15_out_EXO_EE.root'),7.07E-02*luminosity/signal_events,'ee_2000'])
+fs.append([ROOT.TFile('plots/rootfiles/00_08_03_16_15_out_EXO_MUMU.root'),6.22E-02*luminosity/signal_events,'mumu_2000'])
 #fs.append([ROOT.TFile('plots/rootfiles/43_08_02_23_15_genhistos_EE.root'),7.07E-02*luminosity/signal_events,'ee_2000'])
 #fs.append([ROOT.TFile('plots/rootfiles/22_08_02_23_15_genhistos_MUMU.root'),6.22E-02*luminosity/signal_events,'mumu_2000'])
 #for s in xsignals:
 #    fs.append([ROOT.TFile('out_'+s[0]+'.root'),s[1],'signal_'+s[0]])    
     
 for a,log in product(anas,logs):
-    os.system('mkdir -p plots/eemumu/'+a)
+    os.system('mkdir -p plots/eemumu_newscale/'+a)
     ds = []
     for f in fs:
         ds.append([f[0].GetDirectory(a),f[1],f[2]])        
@@ -95,7 +95,7 @@ for a,log in product(anas,logs):
         for i,hi in enumerate(hs[:len(ds)]):
             differentiate_stat_box(hi,i)
                   
-        c1.Print('plots/eemumu/'+a+'/histos_'+h+'_scaled.pdf')
-        c1.Print('plots/eemumu/'+a+'/histos_'+h+'_scaled.png')
+        c1.Print('plots/eemumu_newscale/'+a+'/histos_'+h+'_scaled.pdf')
+        c1.Print('plots/eemumu_newscale/'+a+'/histos_'+h+'_scaled.png')
         c1=0
         th=0

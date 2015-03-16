@@ -17,6 +17,9 @@ WR_Analyzer/test/psets
 
 WR_Analyzer/test/crab.history
 WR_Analyzer/test/temp.py
+WR_Analyzer/test/crab.log
+*~
+haddws
 
 ###############
 # Directories #
