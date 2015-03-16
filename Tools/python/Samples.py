@@ -31,10 +31,11 @@ signal_samples = [Sample('WR_ee_800',3.65E+00,'/eos/uscms/store/user/jchaves/Nst
 
 ttbar_samples = [Sample('ttbar',816,'/TTJets_MSDecaysCKM_central_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',25446993,552)]
 
-dyjets_samples = [Sample('dyjets_HT100to200',2008.4,'/DYJetsToLL_M-50_HT-100to200_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4054159,98),
-                  Sample('dyjets_HT200to400',2008.4,'/DYJetsToLL_M-50_HT-200to400_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4666496,105),
-                  Sample('dyjets_HT400to600',2008.4,'/DYJetsToLL_M-50_HT-400to600_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4931372,115),
-                  Sample('dyjets_HT600toInf',2008.4,'/DYJetsToLL_M-50_HT-600toInf_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4493574,108),
+dyjets_samples = [Sample('dyjets_HT100to200',194.3,'/DYJetsToLL_M-50_HT-100to200_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4054159,98),
+                  Sample('dyjets_HT200to400',50.24,'/DYJetsToLL_M-50_HT-200to400_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4666496,105),
+                  Sample('dyjets_HT400to600',6.546,'/DYJetsToLL_M-50_HT-400to600_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4931372,115),
+                  Sample('dyjets_HT600toInf',2.179,'/DYJetsToLL_M-50_HT-600toInf_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',4493574,108),
+                  
                   Sample('dyjets_M200to400',2008.4,'/DYJetsToEEMuMu_M-200To400_13TeV-madgraph/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',26430,1),
                   Sample('dyjets_M400to800',2008.4,'/DYJetsToEEMuMu_M-400To800_13TeV-madgraph/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',48205,1),
                   Sample('dyjets_M800to1400',2008.4,'/DYJetsToEEMuMu_M-800To1400_13TeV-madgraph/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM',24003,1),
